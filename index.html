@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Nexo, demo de red social con área privada de datos personales, pagos y documentos (información ficticia)." />
+  <title>Nexo · Red social (demo)</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <!-- ================= SIDEBAR ================= -->
+    <aside class="sidebar">
+      <a class="brand" href="#inicio" aria-label="Nexo, inicio">
+        <span class="brand-mark">N</span>
+        <span class="brand-name">Nexo</span>
+      </a>
+
+      <nav class="nav" id="nav" aria-label="Navegación principal">
+        <button class="nav-item active" data-view="inicio">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V21h-6v-6H9v6H3z"/></svg>
+          </span><span>Inicio</span>
+        </button>
+        <button class="nav-item" data-view="explorar">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m15 9-2 4-4 2 2-4z"/></svg>
+          </span><span>Explorar</span>
+        </button>
+        <button class="nav-item" data-view="mensajes">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M4 5h16v12H8l-4 4z"/></svg>
+          </span><span>Mensajes</span>
+          <span class="nav-badge">3</span>
+        </button>
+        <button class="nav-item" data-view="notificaciones">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16zM10 20h4"/></svg>
+          </span><span>Notificaciones</span>
+        </button>
+        <button class="nav-item" data-view="perfil">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>
+          </span><span>Mi perfil</span>
+        </button>
+        <button class="nav-item nav-private" data-view="privado">
+          <span class="nav-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          </span><span>Área privada</span>
+          <span class="lock-dot" title="Protegida por PIN"></span>
+        </button>
+      </nav>
+
+      <button class="new-post-btn" id="openComposer">
+        <span aria-hidden="true">＋</span> Crear publicación
+      </button>
+
+      <div class="sidebar-user">
+        <div class="avatar avatar-sm" id="sidebarAvatar">LM</div>
+        <div class="sidebar-user-info">
+          <strong>Lucía Martín</strong>
+          <span>@lucia.m</span>
+        </div>
+        <span class="demo-chip">DEMO</span>
+      </div>
+    </aside>
+
+    <!-- ================= MAIN ================= -->
+    <main class="main">
+      <header class="topbar">
+        <label class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="searchInput" type="search" placeholder="Buscar personas, publicaciones…" autocomplete="off" />
+        </label>
+        <div class="topbar-actions">
+          <button class="icon-btn" id="themeToggle" title="Cambiar tema" aria-label="Cambiar tema">
+            <svg viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg>
+          </button>
+          <button class="icon-btn" data-view="notificaciones" title="Notificaciones" aria-label="Notificaciones">
+            <svg viewBox="0 0 24 24"><path d="M18 16v-5a6 6 0 0 0-12 0v5l-2 2h16zM10 20h4"/></svg>
+            <span class="dot"></span>
+          </button>
+          <button class="avatar avatar-sm" data-view="perfil" id="topAvatar" title="Mi perfil">LM</button>
+        </div>
+      </header>
+
+      <div class="demo-banner">
+        <span class="demo-banner-icon" aria-hidden="true">ⓘ</span>
+        <span><strong>Modo laboratorio.</strong> Objetivo con vulnerabilidades intencionadas para probar Strix. Todos los datos son ficticios y llevan <code>FLAG{DEMO_*}</code>.</span>
+        <button class="demo-banner-close" id="closeBanner" aria-label="Cerrar aviso">×</button>
+      </div>
+
+      <!-- VISTA: INICIO -->
+      <section class="view active" id="view-inicio">
+        <div class="stories" id="stories" aria-label="Historias"></div>
+
+        <div class="composer" id="composer">
+          <div class="avatar" id="composerAvatar">LM</div>
+          <button class="composer-fake-input" id="composerOpen">¿Qué estás pensando, Lucía?</button>
+          <div class="composer-actions">
+            <button id="composerImage"><span aria-hidden="true">🖼️</span> Foto</button>
+            <button id="composerFeeling"><span aria-hidden="true">😊</span> Estado</button>
+          </div>
+          <form class="composer-form hidden" id="composerForm">
+            <textarea id="composerText" maxlength="280" placeholder="Escribe algo (máx. 280 caracteres)…" required></textarea>
+            <div class="composer-form-footer">
+              <span id="charCounter">0 / 280</span>
+              <div>
+                <button type="button" class="btn-ghost" id="composerCancel">Cancelar</button>
+                <button type="submit" class="btn-primary">Publicar</button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="feed-header">
+          <h2>Para ti</h2>
+          <div class="feed-filter" id="feedFilter">
+            <button class="chip active" data-filter="recientes">Recientes</button>
+            <button class="chip" data-filter="populares">Populares</button>
+          </div>
+        </div>
+
+        <div id="feed"></div>
+        <div class="end-feed">Has llegado al final 🎉</div>
+      </section>
+
+      <!-- VISTA: EXPLORAR -->
+      <section class="view" id="view-explorar">
+        <div class="section-head"><h2>Explorar</h2><p>Descubre cuentas y temas del momento.</p></div>
+        <div class="topic-grid" id="topicGrid"></div>
+        <h3 class="subhead">Personas para seguir</h3>
+        <div class="user-grid" id="exploreUsers"></div>
+      </section>
+
+      <!-- VISTA: MENSAJES -->
+      <section class="view" id="view-mensajes">
+        <div class="section-head"><h2>Mensajes</h2><p>Tus conversaciones recientes.</p></div>
+        <div class="messages-layout">
+          <div class="chat-list" id="chatList"></div>
+          <div class="chat-panel" id="chatPanel"></div>
+        </div>
+      </section>
+
+      <!-- VISTA: NOTIFICACIONES -->
+      <section class="view" id="view-notificaciones">
+        <div class="section-head"><h2>Notificaciones</h2><p>Lo último en tu red.</p></div>
+        <div class="card list" id="notificationList"></div>
+      </section>
+
+      <!-- VISTA: PERFIL -->
+      <section class="view" id="view-perfil">
+        <div class="profile-card card">
+          <div class="profile-cover"></div>
+          <div class="profile-body">
+            <div class="avatar avatar-xl" id="profileAvatar">LM</div>
+            <h2>Lucía Martín <span class="verified" title="Perfil verificado">✓</span></h2>
+            <p class="handle">@lucia.m · Madrid, España</p>
+            <p class="bio">Diseñadora de producto ☕ Café, tipografía y senderismo. Compartiendo ideas en Nexo.</p>
+            <div class="profile-stats">
+              <div><strong>248</strong><span>Seguidores</span></div>
+              <div><strong>312</strong><span>Siguiendo</span></div>
+              <div><strong>41</strong><span>Publicaciones</span></div>
+            </div>
+            <button class="btn-outline" data-view="privado">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+              Ver área privada
+            </button>
+          </div>
+        </div>
+        <h3 class="subhead">Mis publicaciones</h3>
+        <div id="profileFeed"></div>
+      </section>
+
+      <!-- VISTA: ÁREA PRIVADA -->
+      <section class="view" id="view-privado">
+        <div class="section-head private-head">
+          <div>
+            <h2>Área privada</h2>
+            <p>Datos personales, métodos de pago y documentos. <span class="ficticio">Información 100 % ficticia.</span></p>
+          </div>
+          <span class="private-badge">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            Solo para ti
+          </span>
+        </div>
+
+        <!-- Puerta de acceso -->
+        <div class="gate card" id="gate">
+          <div class="gate-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.3"/></svg>
+          </div>
+          <h3>Área protegida</h3>
+          <p>Introduce el PIN de demostración para consultar tus datos.</p>
+          <form id="gateForm" autocomplete="off">
+            <input id="pinInput" type="password" inputmode="numeric" maxlength="4" placeholder="••••" aria-label="PIN de demostración" />
+            <button type="submit" class="btn-primary">Desbloquear</button>
+          </form>
+          <p class="gate-hint">PIN de prueba: <strong>2468</strong></p>
+          <p class="gate-error" id="gateError" role="alert"></p>
+        </div>
+
+        <!-- Contenido desbloqueado -->
+        <div id="privateContent" class="hidden">
+          <div class="private-tabs" id="privateTabs" role="tablist">
+            <button class="private-tab active" data-tab="datos" role="tab">Datos personales</button>
+            <button class="private-tab" data-tab="pagos" role="tab">Pagos</button>
+            <button class="private-tab" data-tab="documentos" role="tab">Documentos</button>
+            <button class="btn-ghost lock-btn" id="lockBtn" title="Volver a bloquear">🔒 Bloquear</button>
+          </div>
+
+          <div class="private-panel active" id="panel-datos" role="tabpanel"></div>
+          <div class="private-panel" id="panel-pagos" role="tabpanel"></div>
+          <div class="private-panel" id="panel-documentos" role="tabpanel"></div>
+
+          <div class="privacy-note">
+            <strong>Privacidad:</strong> esta información es inventada y nunca se envía a ningún servidor. En una aplicación real, estos datos se cifrarían y protegerían con autenticación de dos factores.
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ================= RIGHT ================= -->
+    <aside class="right">
+      <div class="card suggestions">
+        <div class="card-title"><h3>Sugerencias para ti</h3><button id="refreshSuggestions">Ver todo</button></div>
+        <div id="suggestions"></div>
+      </div>
+
+      <div class="card trends">
+        <div class="card-title"><h3>Tendencias</h3></div>
+        <div id="trends"></div>
+      </div>
+
+      <div class="card private-teaser">
+        <div class="teaser-lock" aria-hidden="true">🔐</div>
+        <h3>Tu información, a salvo</h3>
+        <p>Consulta tus datos personales, pagos y documentos en un espacio protegido.</p>
+        <button class="btn-outline" data-view="privado">Ir al área privada</button>
+      </div>
+
+      <div class="card lab-card">
+        <div class="card-title"><h3>🧪 Superficie de prueba</h3></div>
+        <p>Endpoints del laboratorio. Usa el mapa completo en <a href="/lab">/lab</a>.</p>
+        <div class="lab-links">
+          <a href="/admin">/admin</a>
+          <a href="/api/debug">/api/debug</a>
+          <a href="/api/export?admin=true">/api/export</a>
+          <a href="/api/users/1">/api/users/1</a>
+          <a href="/api/documents">/api/documents</a>
+          <a href="/post?id=1">/post?id=1</a>
+          <a href="/api/search?q=demo">/api/search</a>
+          <a href="/files/">/files/</a>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <span>Acerca de</span><span>Ayuda</span><span>Privacidad</span><span>Términos</span>
+        <small>© 2026 Nexo · Demo sin fines comerciales</small>
+      </footer>
+    </aside>
+  </div>
+
+  <!-- Modal de nueva publicación -->
+  <div class="modal" id="modal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head"><h3 id="modalTitle">Nueva publicación</h3><button class="icon-btn" data-close-modal aria-label="Cerrar">×</button></div>
+      <div class="avatar" id="modalAvatar">LM</div>
+      <form id="modalForm">
+        <textarea id="modalText" maxlength="280" placeholder="Cuéntanos algo…" required></textarea>
+        <div class="composer-form-footer">
+          <span id="modalCounter">0 / 280</span>
+          <button type="submit" class="btn-primary">Publicar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="toast-wrap" id="toasts" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
